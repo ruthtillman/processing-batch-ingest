@@ -13,11 +13,12 @@ def writeFile(pidTitle):
     f = open(outputFile, 'w')
     f.write('PID,Title\n')
     while pidTitle != []:
-      PID = '"' + pidTitle.pop(0) + '"'
+      varPID = '"' + pidTitle.pop(0) + '"'
       title = '"' + pidTitle.pop(0) + '"'
-      row = PID + ',' + title + '\n'
+      row = varPID + ',' + title + '\n'
       f.write(row)
 
     f.close()
+    print outputFile + " created."
 
 parseData()
