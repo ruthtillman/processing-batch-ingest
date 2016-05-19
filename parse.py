@@ -2,7 +2,7 @@ import json
 from jq import jq
 
 def parseData():
-    theFile = raw_input("Ingest file name if in our directory or full filepath and filename: ")
+    theFile = raw_input("Ingest file name if in current directory or full filepath and filename: ")
     with open(theFile) as successfulIngest:
       metadata = json.load(successfulIngest)
     pidTitle = jq('.[] | select(.["af-model"] != "GenericFile") |.pid?, .metadata["dc:title"]').transform(metadata, multiple_output=True)
