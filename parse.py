@@ -11,7 +11,7 @@ def parseData():
 def writeFile(pidTitle):
     outputFile = raw_input("Output file name: ")
     f = open(outputFile, 'w')
-    f.write('PID,Title\n')
+    f.write('curate_id,Title\n')
     while pidTitle != []:
       varPID = '"' + pidTitle.pop(0) + '"'
       title = '"' + pidTitle.pop(0) + '"'
