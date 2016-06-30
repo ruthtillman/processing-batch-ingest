@@ -9,7 +9,7 @@ def parseData():
     writeFile(pidTitle)
 
 def writeFile(pidTitle):
-    outputFile = raw_input("File name: ")
+    outputFile = raw_input("Output file name: ")
     f = open(outputFile, 'w')
     f.write('PID,Title\n')
     while pidTitle != []:
