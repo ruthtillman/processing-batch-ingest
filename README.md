@@ -1,6 +1,6 @@
 # Basic Information and description
 
-Useful for matching PIDs to files after an ingest. Works best when titles are distinct. Order ingest metadata file and this file alphabetically on Title. Should match, but should be checked at some levels. Once column with PIDs has been added to spreadsheet, we'll have the tools to update in the future.
+Useful for matching PIDs to files after an ingest. Should run in the same order as original ingest spreadsheet and thus PIDs should be in the right order to begin with. However, dc:title is extracted so we can always compare the two if there's concern.
 
 ## Dependencies
 
