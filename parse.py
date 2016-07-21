@@ -1,24 +1,38 @@
-import json
+import json, glob, os
 from jq import jq
 
-def parseData():
-    theFile = raw_input("Ingest file name if in current directory or full filepath and filename: ")
-    with open(theFile) as successfulIngest:
-      metadata = json.load(successfulIngest)
-    pidTitle = jq('.[] | select(.["af-model"] != "GenericFile") |.pid?, .metadata["dc:title"]').transform(metadata, multiple_output=True)
-    writeFile(pidTitle)
+def parseData(theDirectory):
+    os.chdir(theDirectory)
+    rofFiles = glob.glob("*.rof")
+    for rof in rofFiles:
+        updateRof = "update-" + rof
+        with open(rof) as successFile:
+            metadata = json.load(successFile)
+        PIDArray = jq('.[] | select(.["af-model"] != "GenericFile") |.pid?').transform(metadata, multiple_output=True)
+        writePIDUpdateFile(PIDArray,rof)
+        updateThumbs = jq('.[]|select(.["af-model"] != "GenericFile")|{type,"af-model",pid,properties,"properties-meta"}').transform(metadata, multiple_output=True)
+        writeROFUpdateFile(updateThumbs, updateRof,rof)
 
-def writeFile(pidTitle):
-    outputFile = raw_input("Output file name: ")
+def writePIDUpdateFile(PIDArray,rof):
+    fileNum = rof.replace(".rof","").replace("metadata","")
+    outputFile = "pid" + fileNum + ".csv"
     f = open(outputFile, 'w')
-    f.write('curate_id,Title\n')
-    while pidTitle != []:
-      varPID = '"' + pidTitle.pop(0) + '"'
-      title = '"' + pidTitle.pop(0) + '"'
-      row = varPID + ',' + title + '\n'
-      f.write(row)
-
+    f.write('curate_id\n')
+    while PIDArray != []:
+        for PID in PIDArray:
+            row = PID + '\n'
+            f.write(row)
+            PIDArray.pop(0)
     f.close()
     print outputFile + " created."
 
-parseData()
+def writeROFUpdateFile(updateThumbs, updateRof,rof):
+    with open(updateRof, 'w') as outfile:
+        json.dump(updateThumbs, outfile, indent=4)
+    print updateThumbs + "created."
+
+def takeInputs():
+    theDirectory = raw_input("The path to the directory where the files are stored: ")
+    parseData(theDirectory)
+
+takeInputs()
