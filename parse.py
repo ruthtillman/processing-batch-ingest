@@ -29,7 +29,7 @@ def writePIDUpdateFile(PIDArray,rof):
 def writeROFUpdateFile(updateThumbs, updateRof,rof):
     with open(updateRof, 'w') as outfile:
         json.dump(updateThumbs, outfile, indent=4)
-    print updateThumbs + "created."
+    print updateThumbs + " created."
 
 def takeInputs():
     theDirectory = raw_input("The path to the directory where the files are stored: ")
