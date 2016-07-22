@@ -35,3 +35,5 @@ Runs on Python 2.7.11. Requires installation of Python jq library (possible via 
 ## Future Work
 
 Add support for this being the second or third ingest, running only the process to copy the mid-process CSV files into a directory and keep the most recent copy of the CSV in the main file.
+
+Add support for updating Generic Files. This would involve developing the appropriate JQ to get just the Generic Files and, importantly, obtaining the "content_file" field which has the actual file name in it. Updating Generic Files is still largely untested at this stage as it's more often the parent object metadata which gets augmented.
