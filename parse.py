@@ -50,7 +50,7 @@ def parseData(workingDirectory):
             metadata = json.load(successFile)
         PIDArray = jq('.[] | select(.["af-model"] != "GenericFile") |.pid?').transform(metadata, multiple_output=True)
         writePIDUpdateFile(PIDArray,rof)
-        updateThumbs = jq('.[]|select(.["af-model"] != "GenericFile")|{type,"af-model",pid,properties,"properties-meta"}').transform(metadata, multiple_output=True)
+        updateThumbs = jq('.[]|select(.["af-model"] != "GenericFile")|{type,pid,properties,"properties-meta"}').transform(metadata, multiple_output=True)
         writeROFUpdateFile(updateThumbs,updateRof,rof)
 
 # Writes the JQ-extracted PID array into "pid-n.csv" and prints success message.
