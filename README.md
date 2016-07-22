@@ -25,7 +25,7 @@ The script does the following:
 ## Necessary follow-up steps
 
 1. Open `metadata-n.csv` and `pid-n.csv` files.
-2. Remove files column from `metadata-n.csv` (this is one reason we kept a copy of the originals).
+2. Remove `files` column from `metadata-n.csv` (this is one reason we kept a copy of the originals).
 3. Add column `curate_id` from `pid-n.csv` to `metadata-n.csv` and save. The ordering of the two is the same and thus no extra reconciliation is needed.
 
 ## Dependencies
