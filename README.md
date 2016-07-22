@@ -32,10 +32,6 @@ The script does the following:
 
 Runs on Python 2.7.11. Requires installation of Python jq library (possible via [Homebrew](http://brew.sh/)) before it can be run.
 
-## BUG?
-
-JOB file may be in the wrong order.
-
 ## Future Work
 
 Add support for this being the second or third ingest, running only the process to copy the mid-process CSV files into a directory and keep the most recent copy of the CSV in the main file.
