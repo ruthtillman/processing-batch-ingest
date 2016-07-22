@@ -1,11 +1,14 @@
 import json, glob, os, shutil
 from jq import jq
 
-# Things to add:
-# Take success directory and copy all .rof files to working directory
-# Auto-rename all .rof and (make a backup/renamed copy of) .csv files before this starts.
-# make originals folder for copies and move files there when appropriate.
-# write JOB file
+# Does the ORDER matter on this?
+
+def makeJOBFile(workingDirectory):
+    jobString = '{ "Todo": ["validate","ingest","index"], "Finished": [] }'
+    jobContent = json.loads(jobString)
+    with open("JOB", 'w') as outfile:
+        json.dump(jobContent, outfile, indent=4)
+    print "JOB file created."
 
 def copyROFs(remoteDirectory,workingDirectory):
     os.chdir(remoteDirectory)
@@ -60,18 +63,26 @@ def writeROFUpdateFile(updateThumbs, updateRof,rof):
         json.dump(updateThumbs, outfile, indent=4)
     print updateRof + " created."
 
-def cleanupROFOriginals(workingDirectory):
+def cleanupROFs(workingDirectory):
     originals = workingDirectory + "/originals"
     originalROFs = glob.glob("original*.rof")
     for originalROF in originalROFs:
         shutil.move(originalROF, originals)
     print "Original ROFs moved to folder 'originals.'"
+    thumbs = workingDirectory + "/update-thumbnails"
+    if not os.path.exists(thumbs):
+        os.makedirs(thumbs)
+    thumbnailROFs = glob.glob("*.rof")
+    for thumbnailROF in thumbnailROFs:
+        shutil.move(thumbnailROF, thumbs)
+    print "Thumbnail update ROFs moved to folder 'update-thumbnails.'"
 
 def inputAndRun():
     workingDirectory = raw_input("The path to the local working directory: ")
     remoteDirectory = raw_input("The path to the batch ingest directory: ")
     fileCopyAndManipulation(remoteDirectory,workingDirectory)
     parseData(workingDirectory)
-    cleanupROFOriginals(workingDirectory)
+    cleanupROFs(workingDirectory)
+    makeJOBFile(workingDirectory)
 
 inputAndRun()
