@@ -48,7 +48,7 @@ def parseData(workingDirectory):
         updateRof = rof.replace("original-","")
         with open(rof) as successFile:
             metadata = json.load(successFile)
-        PIDArray = jq('.[] | select(.["af-model"] != "GenericFile") |.pid?').transform(metadata, multiple_output=True)
+        PIDArray = jq('.[] | select(.["af-model"] != "GenericFile") |.pid?, .metadata["dc:title"]').transform(metadata, multiple_output=True)
         writePIDUpdateFile(PIDArray,rof)
         updateThumbs = jq('.[]|select(.["af-model"] != "GenericFile")|{type,pid,properties,"properties-meta"}').transform(metadata, multiple_output=True)
         writeROFUpdateFile(updateThumbs,updateRof,rof)
@@ -59,12 +59,12 @@ def writePIDUpdateFile(PIDArray,rof):
     fileNum = rof.replace(".rof","").replace("original-metadata","")
     outputFile = "pid" + fileNum + ".csv"
     f = open(outputFile, 'w')
-    f.write('curate_id\n')
+    f.write('curate_id,dc:title\n')
     while PIDArray != []:
-        for PID in PIDArray:
-            row = PID + '\n'
-            f.write(row)
-            PIDArray.pop(0)
+      varPID = '"' + str(pidArray.pop(0)) + '"'
+      varTitle = '"' + str(pidArray.pop(0)) + '"'
+      row = varPID + ',' + varTitle + '\n'
+      f.write(row)
     f.close()
     print outputFile + " created."
 
