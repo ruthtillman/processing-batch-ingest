@@ -61,8 +61,8 @@ def writePIDUpdateFile(PIDArray,rof):
     f = open(outputFile, 'w')
     f.write('curate_id,dc:title\n')
     while PIDArray != []:
-      varPID = '"' + str(pidArray.pop(0)) + '"'
-      varTitle = '"' + str(pidArray.pop(0)) + '"'
+      varPID = '"' + str(PIDArray.pop(0)) + '"'
+      varTitle = '"' + str(PIDArray.pop(0)) + '"'
       row = varPID + ',' + varTitle + '\n'
       f.write(row)
     f.close()
