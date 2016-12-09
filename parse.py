@@ -6,7 +6,7 @@ from jq import jq
 def makeJOBFile():
     jobString = '{ "Todo": ["validate","ingest","index"], "Finished": [] }'
     jobContent = json.loads(jobString)
-    with open("JOB", 'w') as outfile:
+    with open("update-thumbnails/JOB", 'w') as outfile:
         json.dump(jobContent, outfile, indent=4)
     print "JOB file created."
 
